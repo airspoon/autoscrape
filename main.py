@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+import time
 
 
 # Location to our Chrome driver:
@@ -8,6 +9,7 @@ service = Service('C:\\Users\\hartm\\iCloudDrive\\chrome_driver\\chromedriver.ex
 
 # xpath to element we want to scrape:
 xpath1 = "/html/body/div[1]/div/h1[1]"
+xpath2 = "/html/body/div[1]/div/h1[2]"
 
 
 # Create driver and set options:
@@ -33,9 +35,16 @@ def get_driver():
     driver.get("http://automated.pythonanywhere.com")
     return driver
 
+def clean_text(text):
+    """Extract the temp from text"""
+    output = float(text.split(": ")[1])
+    return output
+
 def main():
     driver = get_driver()
-    element = driver.find_element(by=By.XPATH, value=xpath1)
-    return element.text
+    time.sleep(2)
+    element = driver.find_element(by=By.XPATH, value=xpath2)
+    # return element.text
+    return clean_text(element.text)
 
 print(main())
